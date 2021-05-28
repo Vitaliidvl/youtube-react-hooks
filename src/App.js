@@ -3,7 +3,15 @@ import TodoList from './TodoList'
 import {Context} from './context'
 import reducer from './reducer'
 
+
+let memories = localStorage.getItem('todos') ?
+JSON.parse(localStorage.getItem('todos')) : 
+[];
+
+localStorage.setItem('todos', JSON.stringify(memories));
+
 export default function App() {
+
   const [state, dispatch] = useReducer(reducer, JSON.parse(localStorage.getItem('todos')))
   const [todoTitle, setTodoTitle] = useState('')
 
@@ -22,6 +30,7 @@ export default function App() {
   }
 
   return (
+    <>
     <Context.Provider value={{
       dispatch
     }}>
@@ -41,5 +50,6 @@ export default function App() {
           <TodoList todos={state} />
       </div>
     </Context.Provider>
+          </>
   );
 }
